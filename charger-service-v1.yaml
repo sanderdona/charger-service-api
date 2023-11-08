@@ -1,0 +1,215 @@
+openapi: 3.0.3
+info:
+  title: Charger service API V1
+  description: A charger service API description
+  version: 0.1.0
+servers:
+  - url: 'https://api.dimensiontech.nl/charger-service/v1'
+    description: Production
+paths:
+  /charge-sessions:
+    get:
+      parameters:
+        - in: query
+          name: pageable
+          required: false
+          schema:
+            $ref: '#/components/schemas/Pageable'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChargeSessionPage'
+  /proofs:
+    get:
+      operationId: getAllProofs
+      parameters:
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Pageable'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageProof'
+  /reports:
+    get:
+      operationId: getReport
+      parameters:
+        - name: start-date
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Date'
+        - name: end-date
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Date'
+      responses:
+        200:
+          description: OK
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+
+components:
+  schemas:
+    ChargeSession:
+      description: information about a charge session
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: The unique identifier of this charge session.
+        startedAt:
+          type: string
+          format: date-time
+          description: Date and time when the session was started.
+        startKwh:
+          type: number
+          description: Meter reading when the session was started.
+        endedAt:
+          type: string
+          format: date-time
+          description: Date and time when the session was ended.
+        endKwh:
+          type: number
+          description: Meter reading when the session was ended.
+        totalKwh:
+          type: number
+          description: Total kWh charged in this session.
+        vehicle:
+          $ref: '#/components/schemas/Vehicle'
+    Vehicle:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: The unique identifier of this vehicle.
+        name:
+          type: string
+          description: The name of this car.
+        odometer:
+          type: integer
+          description: The current mileage displayed by the odometer.
+    ChargeSessionPage:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChargeSession'
+        number:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/Sort'
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        numberOfElements:
+          type: integer
+          format: int32
+        first:
+          type: boolean
+        last:
+          type: boolean
+        empty:
+          type: boolean
+    Proof:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        date:
+          type: string
+          format: date
+    PageProof:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Proof'
+        number:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/Sort'
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        numberOfElements:
+          type: integer
+          format: int32
+        first:
+          type: boolean
+        last:
+          type: boolean
+        empty:
+          type: boolean
+
+    Date:
+      description: object representing a date as YYYY-MM-DD
+      type: string
+      format: date
+      example: '2023-05-17'
+
+    Pageable:
+      description: minimal Pageable query parameters
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        sort:
+          $ref: '#/components/schemas/Sort'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
+        unpaged:
+          type: boolean
+    Sort:
+      type: object
+      properties:
+        empty:
+          type: boolean
+        unsorted:
+          type: boolean
+        sorted:
+          type: boolean
