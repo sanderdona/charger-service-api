@@ -9,8 +9,6 @@ servers:
 paths:
   /charge-sessions:
     get:
-      operationId: getChargeSessions
-      x-spring-paginated: true
       parameters:
         - in: query
           name: pageable
