@@ -4,7 +4,7 @@ info:
   description: A charger service API description
   version: 0.1.0
 servers:
-  - url: 'https://api.dimensiontech.nl/charger-service/v1'
+  - url: 'https://charger-service-api.dimensiontech.nl/api/v1'
     description: Production
 paths:
   /charge-sessions:
