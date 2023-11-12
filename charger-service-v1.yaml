@@ -9,6 +9,7 @@ servers:
 paths:
   /charge-sessions:
     get:
+      operationId: getChargeSessions
       parameters:
         - in: query
           name: pageable
@@ -89,8 +90,17 @@ components:
         totalKwh:
           type: number
           description: Total kWh charged in this session.
-        vehicle:
-          $ref: '#/components/schemas/Vehicle'
+        odometer:
+          type: integer
+          minLength: 1
+          description: The mileage of the vehicle during this session.
+        sessionType:
+          $ref: '#/components/schemas/SessionType'
+        vehicleId:
+          type: string
+          format: uuid
+          readOnly: true
+          description: The unique identifier of the vehicle bound to this session.
     Vehicle:
       type: object
       properties:
@@ -101,7 +111,9 @@ components:
           description: The unique identifier of this vehicle.
         name:
           type: string
-          description: The name of this car.
+          minLength: 1
+          maxLength: 40
+          description: The name of this vehicle.
         odometer:
           type: integer
           description: The current mileage displayed by the odometer.
@@ -178,6 +190,19 @@ components:
           type: boolean
         empty:
           type: boolean
+
+    SessionType:
+      description: >
+        Session type:
+         * `pending` - No vehicle found yet
+         * `anonymous` - No vehicle found during this session
+         * `registered` - Vehicle registered and its id is set to vehicleId
+      type: string
+      default: pending
+      enum:
+        - pending
+        - anonymous
+        - registered
 
     Date:
       description: object representing a date as YYYY-MM-DD
