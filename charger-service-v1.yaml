@@ -90,7 +90,7 @@ components:
         totalKwh:
           type: number
           description: Total kWh charged in this session.
-        odometer:
+        odoMeter:
           type: integer
           minLength: 1
           description: The mileage of the vehicle during this session.
