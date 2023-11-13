@@ -94,7 +94,7 @@ components:
           type: integer
           minLength: 1
           description: The mileage of the vehicle during this session.
-        sessionType:
+        type:
           $ref: '#/components/schemas/SessionType'
         vehicleId:
           type: string
