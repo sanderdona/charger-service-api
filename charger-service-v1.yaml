@@ -194,13 +194,11 @@ components:
     SessionType:
       description: >
         Session type:
-         * `pending` - No vehicle found yet
          * `anonymous` - No vehicle found during this session
          * `registered` - Vehicle registered and its id is set to vehicleId
       type: string
-      default: pending
+      default: anonymous
       enum:
-        - pending
         - anonymous
         - registered
 
