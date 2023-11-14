@@ -23,9 +23,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChargeSessionPage'
+  /charge-sessions/{chargeSessionId}:
+    get:
+      operationId: getChargeSession
+      parameters:
+        - name: chargeSessionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChargeSession'
+          links:
+            getVehicleById:
+              operationId: getVehicle
+              parameters:
+                vehicleId: '$response.body#/vehicleId'
   /proofs:
     get:
-      operationId: getAllProofs
+      operationId: getProofs
       parameters:
         - name: pageable
           in: query
@@ -61,6 +82,22 @@ paths:
               schema:
                 type: string
                 format: binary
+  /vehicles/{vehicleId}:
+    get:
+      operationId: getVehicle
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
 
 components:
   schemas:
