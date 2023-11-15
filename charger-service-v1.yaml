@@ -55,6 +55,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PageProof'
+  /proofs/{proof_id}:
+    get:
+      operationId: getProof
+      parameters:
+        - name: proof_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            image/*:
+              schema:
+                type: string
+                format: binary
   /reports:
     get:
       operationId: getReport
