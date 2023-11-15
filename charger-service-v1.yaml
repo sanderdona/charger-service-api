@@ -55,6 +55,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PageProof'
+    post:
+      operationId: createProof
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                date:
+                  $ref: '#/components/schemas/Date'
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              file:
+                contentType: image/jpeg
+      responses:
+        201:
+          description: Created
   /proofs/{proof_id}:
     get:
       operationId: getProof
