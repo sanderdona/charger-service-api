@@ -4,7 +4,7 @@ info:
   description: A charger service API description
   version: 0.1.0
 servers:
-  - url: 'https://charger-service-api.dimensiontech.nl/api/v1'
+  - url: 'https://charger-service-api.dimensiontech.nl/v1'
     description: Production
 paths:
   /charge-sessions:
@@ -54,7 +54,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PageProof'
+                $ref: '#/components/schemas/ProofPage'
     post:
       operationId: createProof
       requestBody:
@@ -194,29 +194,13 @@ components:
         total_elements:
           type: integer
           format: int64
-        size:
+        current_page:
           type: integer
           format: int32
         content:
           type: array
           items:
             $ref: '#/components/schemas/ChargeSession'
-        number:
-          type: integer
-          format: int32
-        sort:
-          $ref: '#/components/schemas/Sort'
-        pageable:
-          $ref: '#/components/schemas/Pageable'
-        number_of_elements:
-          type: integer
-          format: int32
-        first:
-          type: boolean
-        last:
-          type: boolean
-        empty:
-          type: boolean
     Proof:
       type: object
       properties:
@@ -226,7 +210,7 @@ components:
         date:
           type: string
           format: date
-    PageProof:
+    ProofPage:
       type: object
       properties:
         total_pages:
@@ -235,29 +219,13 @@ components:
         total_elements:
           type: integer
           format: int64
-        size:
+        current_page:
           type: integer
           format: int32
         content:
           type: array
           items:
             $ref: '#/components/schemas/Proof'
-        number:
-          type: integer
-          format: int32
-        sort:
-          $ref: '#/components/schemas/Sort'
-        pageable:
-          $ref: '#/components/schemas/Pageable'
-        number_of_elements:
-          type: integer
-          format: int32
-        first:
-          type: boolean
-        last:
-          type: boolean
-        empty:
-          type: boolean
 
     SessionType:
       description: >
@@ -280,11 +248,6 @@ components:
       description: minimal Pageable query parameters
       type: object
       properties:
-        offset:
-          type: integer
-          format: int64
-        sort:
-          $ref: '#/components/schemas/Sort'
         page_number:
           type: integer
           format: int32
@@ -293,16 +256,7 @@ components:
           type: integer
           format: int32
           default: 30
-        paged:
-          type: boolean
-        unpaged:
-          type: boolean
-    Sort:
-      type: object
-      properties:
-        empty:
-          type: boolean
-        unsorted:
-          type: boolean
-        sorted:
-          type: boolean
+        sort:
+          type: array
+          items:
+            type: string
