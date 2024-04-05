@@ -160,7 +160,6 @@ components:
           description: Total kWh charged in this session.
         odometer:
           type: integer
-          minLength: 1
           description: The mileage of the vehicle during this session.
         type:
           $ref: '#/components/schemas/SessionType'
