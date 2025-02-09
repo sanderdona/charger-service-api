@@ -168,6 +168,7 @@ components:
           format: uuid
           readOnly: true
           description: The unique identifier of the vehicle bound to this session.
+
     Vehicle:
       type: object
       properties:
@@ -184,47 +185,35 @@ components:
         odometer:
           type: integer
           description: The current mileage displayed by the odometer.
+
     ChargeSessionPage:
-      type: object
-      properties:
-        total_pages:
-          type: integer
-          format: int32
-        total_elements:
-          type: integer
-          format: int64
-        current_page:
-          type: integer
-          format: int32
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChargeSession'
+      allOf:
+        - $ref: '#/components/schemas/PageResponse'
+        - type: object
+          properties:
+            content:
+              type: array
+              items:
+                $ref: '#/components/schemas/ChargeSession'
+
     Proof:
       type: object
       properties:
         id:
           type: integer
-          format: int64
         date:
           type: string
           format: date
+
     ProofPage:
-      type: object
-      properties:
-        total_pages:
-          type: integer
-          format: int32
-        total_elements:
-          type: integer
-          format: int64
-        current_page:
-          type: integer
-          format: int32
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/Proof'
+      allOf:
+        - $ref: '#/components/schemas/PageResponse'
+        - type: object
+          properties:
+            content:
+              type: array
+              items:
+                $ref: '#/components/schemas/Proof'
 
     SessionType:
       description: >
@@ -243,19 +232,34 @@ components:
       format: date
       example: '2023-05-17'
 
+    PageResponse:
+      description: Response properties
+      type: object
+      properties:
+        total_pages:
+          type: integer
+        total_elements:
+          type: integer
+        current_page:
+          type: integer
+
     Pageable:
       description: minimal Pageable query parameters
       type: object
       properties:
         page_number:
           type: integer
-          format: int32
           default: 0
         page_size:
           type: integer
-          format: int32
           default: 30
         sort:
           type: array
           items:
-            type: string
+            type: object
+            properties:
+              property:
+                type: string
+              direction:
+                type: string
+                enum: [ ASC, DESC ]
