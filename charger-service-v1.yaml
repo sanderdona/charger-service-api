@@ -10,12 +10,11 @@ paths:
   /charge-sessions:
     get:
       operationId: getChargeSessions
+      x-spring-paginated: true
       parameters:
-        - in: query
-          name: pageable
-          required: false
-          schema:
-            $ref: '#/components/schemas/Pageable'
+        - $ref: 'https://api.swaggerhub.com/apis/spring/pagination/1.0.0#/components/parameters/pageParam'
+        - $ref: 'https://api.swaggerhub.com/apis/spring/pagination/1.0.0#/components/parameters/sizeParam'
+        - $ref: 'https://api.swaggerhub.com/apis/spring/pagination/1.0.0#/components/parameters/sortParam'
       responses:
         200:
           description: OK
@@ -42,12 +41,11 @@ paths:
   /proofs:
     get:
       operationId: getProofs
+      x-spring-paginated: true
       parameters:
-        - name: pageable
-          in: query
-          required: true
-          schema:
-            $ref: '#/components/schemas/Pageable'
+        - $ref: 'https://api.swaggerhub.com/apis/spring/pagination/1.0.0#/components/parameters/pageParam'
+        - $ref: 'https://api.swaggerhub.com/apis/spring/pagination/1.0.0#/components/parameters/sizeParam'
+        - $ref: 'https://api.swaggerhub.com/apis/spring/pagination/1.0.0#/components/parameters/sortParam'
       responses:
         200:
           description: OK
@@ -246,26 +244,3 @@ components:
         current_page:
           type: integer
           format: int32
-
-    Pageable:
-      description: minimal Pageable query parameters
-      type: object
-      properties:
-        page_number:
-          type: integer
-          format: int32
-          default: 0
-        page_size:
-          type: integer
-          format: int32
-          default: 30
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              property:
-                type: string
-              direction:
-                type: string
-                enum: [ ASC, DESC ]
