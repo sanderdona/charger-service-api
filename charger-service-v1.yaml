@@ -38,57 +38,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChargeSession'
-  /proofs:
-    get:
-      operationId: getProofs
-      x-spring-paginated: true
-      parameters:
-        - $ref: 'https://api.swaggerhub.com/apis/spring/pagination/1.0.0#/components/parameters/pageParam'
-        - $ref: 'https://api.swaggerhub.com/apis/spring/pagination/1.0.0#/components/parameters/sizeParam'
-        - $ref: 'https://api.swaggerhub.com/apis/spring/pagination/1.0.0#/components/parameters/sortParam'
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProofPage'
-    post:
-      operationId: createProof
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                date:
-                  $ref: '#/components/schemas/Date'
-                file:
-                  type: string
-                  format: binary
-            encoding:
-              file:
-                contentType: image/jpeg
-      responses:
-        201:
-          description: Created
-  /proofs/{proof_id}:
-    get:
-      operationId: getProof
-      parameters:
-        - name: proof_id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: OK
-          content:
-            image/*:
-              schema:
-                type: string
-                format: binary
   /reports:
     get:
       operationId: getReport
