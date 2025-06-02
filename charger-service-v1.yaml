@@ -143,26 +143,6 @@ components:
               items:
                 $ref: '#/components/schemas/ChargeSession'
 
-    Proof:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        date:
-          type: string
-          format: date
-
-    ProofPage:
-      allOf:
-        - $ref: '#/components/schemas/PageResponse'
-        - type: object
-          properties:
-            content:
-              type: array
-              items:
-                $ref: '#/components/schemas/Proof'
-
     SessionType:
       description: >
         Session type:
